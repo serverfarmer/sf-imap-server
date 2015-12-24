@@ -1,5 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
 # register intermediate CA SSL certificate
 # Tomasz Klim, 2015
 
