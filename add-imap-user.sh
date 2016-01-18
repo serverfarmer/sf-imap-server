@@ -16,7 +16,7 @@ if [ "$2" = "" ]; then
 elif ! [[ $1 =~ ^[a-z0-9]+$ ]]; then
 	echo "error: parameter 1 not conforming user name format"
 	exit 1
-elif ! [[ $2 =~ ^[-.a-z0-9]+$ ]]; then
+elif ! [[ $2 =~ ^[a-z0-9.-]+[.][a-z0-9]+$ ]]; then
 	echo "error: parameter 2 not conforming host name format"
 	exit 1
 elif [ -d /srv/imap/$1 ]; then
