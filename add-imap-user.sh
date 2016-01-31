@@ -3,7 +3,7 @@
 . /opt/farm/scripts/functions.custom
 # create IMAP/fetchmail account, first on local backup/management server,
 # then on specified mail server
-# Tomasz Klim, 2014-2015
+# Tomasz Klim, 2014-2016
 
 
 MINUID=1400
@@ -11,12 +11,12 @@ MAXUID=1599
 
 
 if [ "$2" = "" ]; then
-	echo "usage: $0 <user> <remote-server>"
+	echo "usage: $0 <user> <remote-server[:port]>"
 	exit 1
 elif ! [[ $1 =~ ^[a-z0-9]+$ ]]; then
 	echo "error: parameter 1 not conforming user name format"
 	exit 1
-elif ! [[ $2 =~ ^[a-z0-9.-]+[.][a-z0-9]+$ ]]; then
+elif ! [[ $2 =~ ^[a-z0-9.-]+[.][a-z0-9]+([:][0-9]+)?$ ]]; then
 	echo "error: parameter 2 not conforming host name format"
 	exit 1
 elif [ -d /srv/imap/$1 ]; then
@@ -55,11 +55,19 @@ rm $path/.bash_logout $path/.bashrc $path/.profile
 chown -R imap-$1:imapusers $path
 
 server=$2
-sshkey=`ssh_management_key_storage_filename $server`
+if [ -z "${server##*:*}" ]; then
+	host="${server%:*}"
+	port="${server##*:}"
+else
+	host=$server
+	port=22
+fi
 
-rsync -e "ssh -i $sshkey" -av $path root@$server:/srv/imap
+sshkey=`ssh_management_key_storage_filename $host`
 
-ssh -i $sshkey root@$server "useradd -u $uid -d $path -M -g imapusers -s /bin/false imap-$1"
-ssh -i $sshkey root@$server "usermod -G www-data -a imap-$1"
-ssh -i $sshkey root@$server "echo \"# */5 * * * * imap-$1 /opt/sf-imap-server/cron/fetchmail.sh imap-$1 $1\" >>/etc/crontab"
-ssh -i $sshkey root@$server "passwd imap-$1"
+rsync -e "ssh -i $sshkey -p $port" -av $path root@$host:/srv/imap
+
+ssh -i $sshkey -p $port root@$host "useradd -u $uid -d $path -M -g imapusers -s /bin/false imap-$1"
+ssh -i $sshkey -p $port root@$host "usermod -G www-data -a imap-$1"
+ssh -i $sshkey -p $port root@$host "echo \"# */5 * * * * imap-$1 /opt/sf-imap-server/cron/fetchmail.sh imap-$1 $1\" >>/etc/crontab"
+ssh -i $sshkey -p $port root@$host "passwd imap-$1"
