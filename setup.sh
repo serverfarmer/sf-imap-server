@@ -46,5 +46,4 @@ if [ "$OSVER" = "debian-jessie" ] && [ ! -f /etc/courier/dhparams.orig ]; then
 	openssl dhparam -out /etc/courier/dhparams.pem 2048
 fi
 
-ln -sf /opt/sf-imap-server/add-imap-user.sh /usr/local/bin/add-imap-user
 ln -sf /opt/sf-imap-server/add-intermediate-ca.sh /usr/local/bin/add-intermediate-ca
