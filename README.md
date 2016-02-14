@@ -38,16 +38,13 @@ only the address: you'll still have all your previously received messages in
 place, and you don't need to worry about "slave" accounts plugged to your lost
 "master" account.
 
-**Why 2 different servers?**
+**Why 3 different servers?**
 
 sf-imap-server follows Server Farmer philosophy: there is a customer (which is
 the end user), and there is an IT support company. The latter runs the central
 management server, which is a central database of individual accounts and their
-UIDs, while customer runs the production server.
-
-So add-imap-user.sh scripts first seeks for the lowest free UID on central
-server, then creates an account on it to reserve this UID, and then creates
-the real account on customer's server.
+UIDs, and central storage server, which is responsible for backups, while
+customer runs the production server.
 
 **Commercial support**
 
