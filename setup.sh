@@ -23,7 +23,7 @@ if [ "$OSVER" != "debian-squeeze" ] && [ "$OSVER" != "debian-wheezy" ] && [ "$OS
 	exit 1
 fi
 
-bash /opt/farm/scripts/setup/role.sh imap
+/opt/farm/scripts/setup/role.sh imap
 
 /etc/init.d/courier-imap-ssl stop
 /etc/init.d/courier-imap stop
@@ -46,4 +46,4 @@ if [ "$OSVER" = "debian-jessie" ] && [ ! -f /etc/courier/dhparams.orig ]; then
 	openssl dhparam -out /etc/courier/dhparams.pem 2048
 fi
 
-ln -sf /opt/sf-imap-server/add-intermediate-ca.sh /usr/local/bin/add-intermediate-ca
+ln -sf /opt/farm/ext/imap-server/add-intermediate-ca.sh /usr/local/bin/add-intermediate-ca

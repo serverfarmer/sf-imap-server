@@ -13,4 +13,4 @@ log="$home/logs/$mode-`date +%Y%m%d-%H%M`.$$.log"
 
 LANG=en_US.UTF-8 fetchmail -f $home/.fetchmailrc --mda "/usr/bin/maildrop -d $user" >$log 2>&1
 
-/opt/sf-imap-server/cron/notify.sh $log $home $mode
+/opt/farm/ext/imap-server/cron/notify.sh $log $home $mode
