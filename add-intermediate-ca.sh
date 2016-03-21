@@ -19,5 +19,11 @@ if [ "$extension" != "crt" ]; then
 	mv $path/$base $path/$filename.crt
 fi
 
+if [ "`file $path/$filename.crt |grep 'PEM certificate'`" = "" ]; then
+	echo "converting DER certificate to PEM"
+	openssl x509 -in $path/$filename.crt -out $path/$filename.tmp-pem -outform PEM -inform DER
+	mv -f $path/$filename.tmp-pem $path/$filename.crt
+fi
+
 c_rehash
 update-ca-certificates
