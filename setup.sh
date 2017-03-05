@@ -18,11 +18,12 @@ set_courier_option() {
 }
 
 
-if [ "$OSVER" != "debian-squeeze" ] && [ "$OSVER" != "debian-wheezy" ] && [ "$OSVER" != "debian-jessie" ] && [ "$OSVER" != "ubuntu-trusty" ]; then
+if [ "$OSVER" != "debian-squeeze" ] && [ "$OSVER" != "debian-wheezy" ] && [ "$OSVER" != "debian-jessie" ] && [ "$OSVER" != "ubuntu-trusty" ] && [ "$OSVER" != "ubuntu-xenial" ]; then
 	echo "skipping courier imap setup, unsupported operating system version"
 	exit 1
 fi
 
+/opt/farm/scripts/setup/role.sh sf-php
 /opt/farm/scripts/setup/role.sh imap
 
 /etc/init.d/courier-imap-ssl stop
