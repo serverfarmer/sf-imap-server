@@ -23,8 +23,8 @@ if [ "$OSVER" != "debian-squeeze" ] && [ "$OSVER" != "debian-wheezy" ] && [ "$OS
 	exit 1
 fi
 
-/opt/farm/scripts/setup/role.sh sf-php
-/opt/farm/scripts/setup/role.sh imap
+/opt/farm/scripts/setup/extension.sh sf-php
+/opt/farm/ext/repos/install.sh imap
 
 /etc/init.d/courier-imap-ssl stop
 /etc/init.d/courier-imap stop
