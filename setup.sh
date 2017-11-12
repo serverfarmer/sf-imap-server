@@ -30,9 +30,11 @@ fi
 /etc/init.d/courier-imap stop
 /etc/init.d/courier-authdaemon stop
 
-update-rc.d -f courier-imap-ssl remove
-update-rc.d -f courier-imap remove
-update-rc.d -f courier-authdaemon remove
+if [ "$HWTYPE" != "container" ] && [ "$HWTYPE" != "lxc" ]; then
+	update-rc.d -f courier-imap-ssl remove
+	update-rc.d -f courier-imap remove
+	update-rc.d -f courier-authdaemon remove
+fi
 
 save_original_config /etc/courier/imapd
 save_original_config /etc/courier/imapd-ssl
