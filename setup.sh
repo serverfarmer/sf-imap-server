@@ -48,5 +48,3 @@ if [ "$OSVER" = "debian-jessie" ] && [ ! -f /etc/courier/dhparams.orig ]; then
 	mv /etc/courier/dhparams.pem /etc/courier/dhparams.orig
 	openssl dhparam -out /etc/courier/dhparams.pem 2048
 fi
-
-ln -sf /opt/farm/ext/imap-server/add-intermediate-ca.sh /usr/local/bin/add-intermediate-ca
