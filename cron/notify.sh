@@ -1,8 +1,6 @@
-#!/bin/bash
-. /opt/farm/scripts/functions.custom
+#!/bin/sh
 
-
-rcpt="fetchmail@`external_domain`"
+rcpt="fetchmail@`/opt/farm/config/get-external-domain.sh`"
 
 log=$1
 home=$2
